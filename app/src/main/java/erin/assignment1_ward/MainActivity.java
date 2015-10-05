@@ -33,6 +33,7 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create an ArtistDataSource and get Artists
         ArtistDataSource ds = new ArtistDataSource(this);
         ArrayList<Artist> artists = ds.getArtists();
 
@@ -41,6 +42,7 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         FragmentTransaction ft;
         artistFragment = (ArtistFragment) fm.findFragmentByTag(ArtistFragment.TAG);
 
+        // Check for existing artist fragment
         if (artistFragment == null) {
             // create a new instance of ArtistFragment & set arguments
             artistFragment = new ArtistFragment();
@@ -58,6 +60,7 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         }
         getActionBar().setDisplayHomeAsUpEnabled(false);
 
+        // Check orientation and ensure fragments are in appropriate containers
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
             if (songFragment != null) {
                 ft = fm.beginTransaction();
@@ -99,19 +102,22 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
 
         Bundle bundle = new Bundle();
 
+        // Create a SongDataSource and get Songs
         SongDataSource ds = new SongDataSource(this);
         ArrayList<Song> songs = ds.getSongs(clickedArtistId);
 
-        // create a Bundle to send the info to fragment
+        // Create a Bundle to send the info to fragment
         bundle.putParcelableArrayList("songs", songs);
 
-        // create a new instance of SongFragment & set arguments
+        // Create a new instance of SongFragment & set arguments
         SongFragment songFragment = new SongFragment();
         songFragment.setArguments(bundle);
 
+        // Create instance of FragmentManager
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
+        // Check orientation and add song fragment to appropriate container
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
             // get the FragmentManager and put in the SongFragment
             ft.replace(R.id.container2, songFragment, SongFragment.TAG);

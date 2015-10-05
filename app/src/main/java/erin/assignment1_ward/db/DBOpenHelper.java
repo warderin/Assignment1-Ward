@@ -22,6 +22,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(ArtistDataSource.CREATE_TABLE);
         db.execSQL(SongDataSource.CREATE_TABLE);
 
+        // Call method to pre-populate database with artists and songs
         populateDB(db);
     }
 
@@ -31,6 +32,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Populate database tables with Artists and Songs
     public void populateDB(SQLiteDatabase db) {
         String query;
         query = "INSERT INTO Artist VALUES (1, 'Queen');";

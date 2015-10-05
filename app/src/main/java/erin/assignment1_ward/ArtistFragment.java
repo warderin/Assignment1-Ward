@@ -28,13 +28,13 @@ public class ArtistFragment extends ListFragment {
         void onItemSelected(Artist artist);
     }
 
-    // variable to hold reference to Activity
+    // Variable to hold reference to Activity
     FragmentListListener mListListener;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // hold a reference to the activity for calling
+        // Hold a reference to the activity for calling
         mListListener = (FragmentListListener) activity;
     }
 
@@ -44,15 +44,15 @@ public class ArtistFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        // get the arguments passed in from Activity
+        // Get the arguments passed in from MainActivity
         Bundle bundle = getArguments();
         ArrayList<Artist> artists = bundle.getParcelableArrayList("artists");
 
-        // inflate the view and get the ListView
+        // Inflate the view with artist fragment and get the ListView
         View view = inflater.inflate(R.layout.fragment_artist, container, false);
         ListView lv = (ListView) view.findViewById(android.R.id.list);
 
-        // create an ArrayAdapter and assign it to the ListView
+        // Create an ArtistAdapter and assign it to the ListView
         ArtistAdapter adapter = new ArtistAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, artists);
         lv.setAdapter(adapter);
@@ -68,7 +68,7 @@ public class ArtistFragment extends ListFragment {
 
         Toast.makeText(this.getActivity(), "Clicked Item: " + clickedArtist.getName(), Toast.LENGTH_SHORT).show();
 
-        // invoke the callback method on the parent Activity
+        // Invoke the callback method on MainActivity
         mListListener.onItemSelected(clickedArtist);
     }
 

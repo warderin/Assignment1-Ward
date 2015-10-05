@@ -26,6 +26,8 @@ public class ArtistAdapter extends ArrayAdapter<Artist> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+
+        // Create new Artist list item and populate with artist name
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.artist_list_item, null);

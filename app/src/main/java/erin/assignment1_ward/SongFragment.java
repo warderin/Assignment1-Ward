@@ -28,14 +28,15 @@ public class SongFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        // get the arguments passed in from Activity
+        // Get the arguments passed in from MainActivity
         Bundle bundle = getArguments();
 
+        // Error handling for non-existent bundle
         if (bundle == null) {
             bundle = new Bundle();
         }
 
-        // inflate the view and get the ListView
+        // Inflate the view and get the ListView
         View view = inflater.inflate(R.layout.fragment_song, container, false);
 
         if (bundle.containsKey("songs")) {
@@ -43,7 +44,7 @@ public class SongFragment extends ListFragment {
 
             ListView lv = (ListView) view.findViewById(android.R.id.list);
 
-            // create an ArrayAdapter and assign it to the ListView
+            // Create a SongAdapter and assign it to the ListView
             SongAdapter adapter = new SongAdapter(getActivity(),
                     android.R.layout.simple_list_item_1, songs);
             lv.setAdapter(adapter);

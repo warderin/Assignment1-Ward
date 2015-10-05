@@ -24,8 +24,11 @@ public class SongAdapter extends ArrayAdapter<Song> {
         this.songs = songs;
     }
 
+
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+
+        // Create new Song list item and populate with song data
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.song_list_item, null);

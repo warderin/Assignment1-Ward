@@ -36,6 +36,7 @@ public class ArtistDataSource {
         dbOpenHelper = new DBOpenHelper(context);
     }
 
+    // Save new Artist to Artist table
     public Artist saveArtist(Artist artist) {
         db = dbOpenHelper.getWritableDatabase();
 
@@ -51,6 +52,7 @@ public class ArtistDataSource {
         return artist;
     }
 
+    // Get all Artists in Artist table
     public ArrayList<Artist> getArtists() {
         ArrayList<Artist> artists = new ArrayList<>();
 

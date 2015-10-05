@@ -48,6 +48,7 @@ public class SongDataSource {
         dbOpenHelper = new DBOpenHelper(context);
     }
 
+    // Save new Song to Song table
     public Song saveSong(Song song) {
         db = dbOpenHelper.getWritableDatabase();
 
@@ -65,6 +66,7 @@ public class SongDataSource {
         return song;
     }
 
+    // Get ArrayList of Songs based on an ArtistId
     public ArrayList<Song> getSongs(long clickedArtistId) {
         ArrayList<Song> songs = new ArrayList<>();
 
@@ -86,6 +88,7 @@ public class SongDataSource {
         return songs;
     }
 
+    // Get all songs from Songs table (unused, but belongs as a generic CRUD method)
     public ArrayList<Song> getAllSongs() {
         ArrayList<Song> songs = new ArrayList<>();
 
