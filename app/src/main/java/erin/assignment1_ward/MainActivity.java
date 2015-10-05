@@ -35,10 +35,6 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         ArtistDataSource ds = new ArtistDataSource(this);
         ArrayList<Artist> artists = ds.getArtists();
 
-        // create a Bundle to send the info to fragment
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("artists", artists);
-
         // get the FragmentManager and put in the ArtistFragment
         FragmentManager fm = getFragmentManager();
         artistFragment = (ArtistFragment) fm.findFragmentByTag(ArtistFragment.TAG);
@@ -46,12 +42,18 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         if (artistFragment == null) {
             // create a new instance of ArtistFragment & set arguments
             artistFragment = new ArtistFragment();
+            // create a Bundle to send the info to fragment
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("artists", artists);
+            artistFragment.setArguments(bundle);
+            fm.beginTransaction()
+                    .add(R.id.container, artistFragment, ArtistFragment.TAG)
+                    .commit();
+        } else {
+            fm.beginTransaction()
+                    .replace(R.id.container, artistFragment, ArtistFragment.TAG)
+                    .commit();
         }
-
-        artistFragment.setArguments(bundle);
-        fm.beginTransaction()
-                .add(R.id.container, artistFragment, ArtistFragment.TAG)
-                .commit();
 
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
             songFragment = (SongFragment) fm.findFragmentByTag(SongFragment.TAG);
