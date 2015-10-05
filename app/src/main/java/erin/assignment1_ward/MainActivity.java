@@ -2,6 +2,7 @@ package erin.assignment1_ward;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
 
         // get the FragmentManager and put in the ArtistFragment
         FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft;
         artistFragment = (ArtistFragment) fm.findFragmentByTag(ArtistFragment.TAG);
 
         if (artistFragment == null) {
@@ -46,16 +48,22 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("artists", artists);
             artistFragment.setArguments(bundle);
-            fm.beginTransaction()
-                    .add(R.id.container, artistFragment, ArtistFragment.TAG)
-                    .commit();
+            ft = fm.beginTransaction();
+            ft.add(R.id.container, artistFragment, ArtistFragment.TAG);
+            ft.commit();
         } else {
             fm.beginTransaction()
                     .replace(R.id.container, artistFragment, ArtistFragment.TAG)
                     .commit();
         }
+        getActionBar().setDisplayHomeAsUpEnabled(false);
 
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
+            if (songFragment != null) {
+                ft = fm.beginTransaction();
+                ft.replace(R.id.container, artistFragment, ArtistFragment.TAG);
+                ft.commit();
+            }
             songFragment = (SongFragment) fm.findFragmentByTag(SongFragment.TAG);
             if (songFragment == null) {
                 SongFragment songFragment = new SongFragment();
@@ -102,16 +110,18 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         songFragment.setArguments(bundle);
 
         FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
 
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
             // get the FragmentManager and put in the SongFragment
-            fm.beginTransaction()
-                    .replace(R.id.container2, songFragment, SongFragment.TAG)
-                    .commit();
+            ft.replace(R.id.container2, songFragment, SongFragment.TAG);
+            ft.addToBackStack(SongFragment.TAG);
+            ft.commit();
         } else {
-            fm.beginTransaction()
-                    .replace(R.id.container, songFragment, SongFragment.TAG)
-                    .commit();
+            getActionBar().setDisplayHomeAsUpEnabled(true); //set up 'Up' button in the song view action bar.
+            ft.replace(R.id.container, songFragment, SongFragment.TAG);
+            ft.addToBackStack(ArtistFragment.TAG);
+            ft.commit();
         }
     }
 }
