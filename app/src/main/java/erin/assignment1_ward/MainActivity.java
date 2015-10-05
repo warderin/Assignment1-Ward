@@ -45,12 +45,13 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
 
         if (artistFragment == null) {
             // create a new instance of ArtistFragment & set arguments
-            ArtistFragment artistFragment = new ArtistFragment();
-            artistFragment.setArguments(bundle);
-            fm.beginTransaction()
-                    .add(R.id.container, artistFragment, ArtistFragment.TAG)
-                    .commit();
+            artistFragment = new ArtistFragment();
         }
+
+        artistFragment.setArguments(bundle);
+        fm.beginTransaction()
+                .add(R.id.container, artistFragment, ArtistFragment.TAG)
+                .commit();
 
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
             songFragment = (SongFragment) fm.findFragmentByTag(SongFragment.TAG);
@@ -98,10 +99,17 @@ public class MainActivity extends Activity implements ArtistFragment.FragmentLis
         SongFragment songFragment = new SongFragment();
         songFragment.setArguments(bundle);
 
-        // get the FragmentManager and put in the SongFragment
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.container2, songFragment, SongFragment.TAG)
-                .commit();
+
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
+            // get the FragmentManager and put in the SongFragment
+            fm.beginTransaction()
+                    .replace(R.id.container2, songFragment, SongFragment.TAG)
+                    .commit();
+        } else {
+            fm.beginTransaction()
+                    .replace(R.id.container, songFragment, SongFragment.TAG)
+                    .commit();
+        }
     }
 }
